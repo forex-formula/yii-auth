@@ -17,10 +17,10 @@ class AssignmentController extends AuthController
      */
     public function actionIndex()
     {
-        $model = new $this->module->userClass('search');
+        $model = new UserFilterForm('search');
         $model->unsetAttributes();  // clear any default values
-        if(isset($_GET[$this->module->userClass])) {
-            $model->attributes = $_GET[$this->module->userClass];
+        if(isset($_GET['UserFilterForm'])) {
+            $model->attributes = $_GET['UserFilterForm'];
         }
 
         $this->render(

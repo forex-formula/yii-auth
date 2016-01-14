@@ -44,4 +44,20 @@ class AuthAssignmentItemsColumn extends AuthAssignmentColumn
             echo ' <small>' . $controller->getItemTypeText($itemPermission['item']->type, false) . '</small><br />';
         }
     }
+
+    /**
+     * Renders the filter cell content.
+     */
+    protected function renderFilterCellContent()
+    {
+        $options = array();
+        /* @var $am CAuthManager|AuthBehavior */
+        $am = Yii::app()->authManager;
+        /* @var $authItems CAuthItem[] */
+        $authItems = $am->getAuthItems();
+        foreach ($authItems as $itemName => $item) {
+            $options[Yii::app()->controller->capitalize(Yii::app()->controller->getItemTypeText($item->type, true))][$itemName] = $item->description;
+        }
+        echo CHtml::activeDropDownList($this->grid->filter, 'role', $options, ['prompt' => '']);
+    }
 }
