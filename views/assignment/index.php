@@ -19,6 +19,10 @@ $this->breadcrumbs = array(
         'template' => "{items}\n{pager}",
         'columns' => array(
             array(
+                'header' => 'ID',
+                'name' => Yii::app()->controller->module->userIdColumn,
+            ),
+            array(
                 'header' => Yii::t('AuthModule.main', 'User'),
                 'class' => 'AuthAssignmentNameColumn',
             ),
