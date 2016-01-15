@@ -85,15 +85,32 @@ class UserFilterForm extends CFormModel
     public function search()
     {
         $module = Yii::app()->controller->module;
+        /* @var $model CActiveRecord */
         $model = new $module->userClass('search');
         $model->unsetAttributes();
         $model->setAttributes([
             $module->userIdColumn => $this->_id,
             $module->userNameColumn => $this->_name
         ]);
+        /* @var $dataProvider CActiveDataProvider */
         $dataProvider = $model->search();
         if ($this->authItem) {
-// ???
+            $criteria = $dataProvider->getCriteria();
+            /* @var $am CDbAuthManager|AuthBehavior */
+            $am = Yii::app()->authManager;
+            $items = [$this->authItem];
+            foreach ($am->getAncestors($this->authItem) as $i => $ancestor) {
+                $items[] = $ancestor['name'];
+            }
+            $joins = [];
+            $ifnull = [];
+            foreach ($items as $i => $item) {
+                $joins[] = 'LEFT JOIN ' . $am->assignmentTable . ' j' . $i . ' ON j' . $i . '.itemname = :j' . $i . '_itemname AND j' . $i . '.userid = t.id';
+                $ifnull[] = 'IFNULL(j' . $i . '.userid, 0)';
+                $criteria->params[':j' . $i . '_itemname'] = $item;
+            }
+            $criteria->join .= ' ' . implode(' ', $joins);
+            $criteria->addCondition(implode(' + ', $ifnull) . ' > 0');
         }
         return $dataProvider;
     }
