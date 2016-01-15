@@ -58,6 +58,6 @@ class AuthAssignmentItemsColumn extends AuthAssignmentColumn
         foreach ($authItems as $itemName => $item) {
             $options[Yii::app()->controller->capitalize(Yii::app()->controller->getItemTypeText($item->type, true))][$itemName] = $item->description;
         }
-        echo CHtml::activeDropDownList($this->grid->filter, 'role', $options, ['prompt' => '']);
+        echo CHtml::activeDropDownList($this->grid->filter, 'authItem', $options, ['prompt' => '']);
     }
 }

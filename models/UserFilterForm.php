@@ -7,7 +7,7 @@ class UserFilterForm extends CFormModel
 
     private $_name;
 
-    public $role;
+    public $authItem;
 
     public function __get($name)
     {
@@ -71,7 +71,7 @@ class UserFilterForm extends CFormModel
         return [
             $module->userIdColumn,
             $module->userNameColumn,
-            'role'
+            'authItem'
         ];
     }
 
@@ -92,7 +92,7 @@ class UserFilterForm extends CFormModel
             $module->userNameColumn => $this->_name
         ]);
         $dataProvider = $model->search();
-        if ($this->role) {
+        if ($this->authItem) {
 // ???
         }
         return $dataProvider;
