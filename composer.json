@@ -12,7 +12,7 @@
         }
     ],
     "require": {
-        "clevertech/yii-booster": "v4.0.1"
+        "clevertech/yii-booster": "v3.1.1"
     },
     "require-dev": {
         "yiisoft/yii": ">=1.1.0"
